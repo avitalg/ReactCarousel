@@ -8,7 +8,7 @@ function Carousel(props) {
     const [maxSlide, setmaxSlide] = useState(0)
     const [lockNext, setlockNext] = useState(true)
     const [lockPrev, setlockPrev] = useState(true)
-    const [clicked, setClickeed] = useState();
+    const [clicked, setClicked] = useState();
     const [arrowDir, setArrowDir] = useState({ "prev": "left", "next": "right" })
     useEffect(() => {
         if (props.children && props.children.length != 0) {
@@ -31,12 +31,12 @@ function Carousel(props) {
         switch (side) {
             case "prev":
                 if (lockPrev) return;
-                setClickeed(arrowDir.prev);
+                setClicked(arrowDir.prev);
                 setCurrSlide(currSlide - 1);
                 break;
             case "next":
                 if (lockNext) return;
-                setClickeed(arrowDir.next);
+                setClicked(arrowDir.next);
                 setCurrSlide(currSlide + 1);
                 break;
         }
