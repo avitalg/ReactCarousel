@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Arrow from './Arrow';
+import Fade from 'react-reveal/Fade';
 
 function Carousel(props) {
     const [currSlide, setCurrSlide] = useState(0)
     const [maxSlide, setmaxSlide] = useState(0)
     const [lockNext, setlockNext] = useState(true)
     const [lockPrev, setlockPrev] = useState(true)
+    const [clicked, setClickeed] = useState();
     const [arrowDir, setArrowDir] = useState({ "prev": "left", "next": "right" })
     useEffect(() => {
         if (props.children && props.children.length != 0) {
@@ -29,10 +31,12 @@ function Carousel(props) {
         switch (side) {
             case "prev":
                 if (lockPrev) return;
+                setClickeed(arrowDir.prev);
                 setCurrSlide(currSlide - 1);
                 break;
             case "next":
                 if (lockNext) return;
+                setClickeed(arrowDir.next);
                 setCurrSlide(currSlide + 1);
                 break;
         }
@@ -46,7 +50,7 @@ function Carousel(props) {
             </div>
             <CarouselContainer>
                 {props.children.map((child, index) => (
-                    (currSlide == index) ? child : null
+                    (currSlide == index) ? <Fade left={clicked=="left"} right={clicked=="right"} >child</Fade> : null
                 ))}
             </CarouselContainer>
         </div>
