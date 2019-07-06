@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Arrow from './Arrow';
-import Fade from 'react-reveal/Fade';
+import Slide from './Slide';
 
 function Carousel(props) {
     const [currSlide, setCurrSlide] = useState(0)
@@ -50,7 +50,7 @@ function Carousel(props) {
             </div>
             <CarouselContainer>
                 {props.children.map((child, index) => (
-                    (currSlide == index) ? <Fade left={clicked=="left"} right={clicked=="right"} >child</Fade> : null
+                    (currSlide == index) ? <Slide left={clicked=="left"} right={clicked=="right"} >child</Slide> : null
                 ))}
             </CarouselContainer>
         </div>
