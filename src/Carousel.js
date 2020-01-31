@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Arrow from './Arrow';
 import Slide from './Slide';
 
-function Carousel(props) {
-    const [currSlide, setCurrSlide] = useState(0)
-    const [maxSlide, setmaxSlide] = useState(0)
-    const [lockNext, setlockNext] = useState(true)
-    const [lockPrev, setlockPrev] = useState(true)
+const Carousel = (props) => {
+    const [currSlide, setCurrSlide] = useState(0);
+    const [maxSlide, setmaxSlide] = useState(0);
+    const [lockNext, setlockNext] = useState(true);
+    const [lockPrev, setlockPrev] = useState(true);
     const [clicked, setClicked] = useState();
-    const [arrowDir, setArrowDir] = useState({ "prev": "left", "next": "right" })
+    const [arrowDir, setArrowDir] = useState({ "prev": "left", "next": "right" });
+    const { children, dir } = props;
+    
     useEffect(() => {
-        if (props.children && props.children.length != 0) {
-            setmaxSlide(props.children.length - 1);
+        if (children && children.length !== 0) {
+            setmaxSlide(children.length - 1);
             setlockNext(false);
         }
 
-        if (props.dir == "rtl") {
+        if (dir === "rtl") {
             setArrowDir({ "prev": "right", "next": "left" });
         }
 
-    }, []);
+    }, [children, dir]);
 
     useEffect(() => {
         (maxSlide <= currSlide) ? setlockNext(true) : setlockNext(false);
@@ -39,6 +42,8 @@ function Carousel(props) {
                 setClicked(arrowDir.next);
                 setCurrSlide(currSlide + 1);
                 break;
+            default:
+                return;
         }
     }
 
@@ -49,16 +54,25 @@ function Carousel(props) {
                 <Arrow side="next" dir={arrowDir.next} lock={lockNext} click={(e) => moveSlide("next")} />
             </div>
             <CarouselContainer>
-                {props.children.map((child, index) => (
-                    (currSlide == index) ? <Slide left={clicked=="left"} right={clicked=="right"} >child</Slide> : null
+                {children.map((child, index) => (
+                    (currSlide === index) ? <Slide left={clicked==="left"} right={clicked==="right"} key={index}>{child}</Slide> : null
                 ))}
             </CarouselContainer>
         </div>
     );
 }
 
-export default Carousel
+export default Carousel;
 
 const CarouselContainer = styled.div`
 text-align: center;
-`
+`;
+
+Carousel.propTypes = {
+    dir: PropTypes.string,
+    children: PropTypes.node.isRequired,
+};
+
+Carousel.defaultProps = {
+    dir: "ltr",
+};

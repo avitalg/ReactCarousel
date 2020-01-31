@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from './Carousel';
-function App() {
-  return (
+
+const App = () => (
     <div className="App">
       <Carousel dir="ltr">
         <div>1</div>
@@ -10,7 +10,6 @@ function App() {
         <div>4</div>
       </Carousel>
     </div>
-  );
-}
+);
 
 export default App;

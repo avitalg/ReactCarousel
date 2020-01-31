@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import Fade from 'react-reveal/Fade';
+import PropTypes from 'prop-types';
 
-function Slide(props) {
+const Slide = (props) =>(
+    <Fade left={props.left} right={props.right} >{props.children}</Fade>
+);
 
-    return (
-        <Fade left={props.left} right={props.right} >child</Fade>
-    );
-}
+export default Slide;
 
-export default Slide
+Slide.propTypes = {
+    left: PropTypes.bool.isRequired,
+    right: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+};
